@@ -11,11 +11,24 @@ const noteSchema = new Schema({
 
 const Note = mongoose.model('Note', noteSchema)
 
-app.post('/creaate-note',(req: Request, res: Response )=>{
+app.get('/get-note', async (req: Request, res: Response) => {
+    const notes = await Note.find();
+    console.log(notes);
+    res.status(200).json({
+        success: true,
+        notes,
+    });
+    return notes;
+});
+
+app.post('/creaate-note',async(req: Request, res: Response )=>{
     const myNote = new Note({
         title: "Learing Mongooses",
         containt: "Learing Mongooses in Programming hero"
     })
+
+    await myNote.save();
+
     res.status(201).json({
         success: true,
         message: "Note create successfully",
