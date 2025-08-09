@@ -20,7 +20,10 @@ const noteSchema = new Schema({
   tags:{
     label:{type: String, require: true},
     color:{ type: String, default: "Red"}
-  }
+  },
+},{
+  versionKey: false,
+  timestamps: true
 });
 
 const Note = mongoose.model("Note", noteSchema);
@@ -28,7 +31,7 @@ const Note = mongoose.model("Note", noteSchema);
 // ================note create===============
 app.post("/note/creaate-note", async (req: Request, res: Response) => {
 
-    //approach 01 to data inchart mongodb
+    //approach 01 to data inchart mongodb//
 //   const myNote = new Note({
 //     title: "Learing Mongooses now",
 //     author: "Arafat",
@@ -66,8 +69,45 @@ app.get("/notes", async (req: Request, res: Response) => {
     success: true,
     notes,
   });
-  return notes;
 });
+//==================gate single note=============
+app.get("/notes/:noteId", async (req: Request, res: Response) => {
+        const noteId = req.params.noteId;
+        const notes = await Note.findById(noteId)
+  console.log(notes);
+  res.status(200).json({
+    success: true,
+    notes,
+  });
+});
+//==================Update========================
+app.patch("/notes/:noteId", async (req: Request, res: Response) => {
+    const updatedBody = req.body;
+    const noteId = req.params.noteId;
+    console.log(noteId);
+    
+    console.log("updatebody",updatedBody);
+    const notes = await Note.findByIdAndUpdate(noteId, updatedBody,{new: true})
+       // const note = await Note.findOneAndUpdate({ _id: noteId }, updatedBody, { new: true, })
+       // const note = await Note.updateOne({ _id: noteId }, updatedBody, { new: true, })
+  console.log(notes);
+  res.status(200).json({
+    success: true,
+    notes,
+  });
+});
+//==================Delete========================
+app.delete("/notes/:noteId", async (req: Request, res: Response) => {
+    const noteId = req.params.noteId;
+    const notes = await Note.findByIdAndDelete(noteId)
+    // const note1 = await Note.findOneAndDelete({ _id: noteId })
+    // const note2 = await Note.deleteOne({ _id: noteId })
+  res.status(200).json({
+    success: true,
+    notes,
+  });
+});
+
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome To Our Server");
