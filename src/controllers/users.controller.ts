@@ -18,6 +18,19 @@ const user = await User.create(body)
     user
   });
 });
+// ================note create===============
+userRoutes.post("/create-user", async (req: Request, res: Response) => {
+
+//approach 02 to data inchart mongodb
+const body = req.body;
+const user = await User.create(body)
+
+  res.status(201).json({
+    success: true,
+    message: "User create successfully",
+    user
+  });
+});
 //==================gate all note=============
 userRoutes.get("/", async (req: Request, res: Response) => {
   const notes = await User.find();
