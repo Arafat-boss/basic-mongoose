@@ -45,16 +45,7 @@ notesRoutes.get("/", async (req: Request, res: Response) => {
     notes,
   });
 });
-//==================gate single note=============
-notesRoutes.get("/:noteId", async (req: Request, res: Response) => {
-        const noteId = req.params.noteId;
-        const notes = await Note.findById(noteId)
-  console.log(notes);
-  res.status(200).json({
-    success: true,
-    notes,
-  });
-});
+
 //==================Update========================
 notesRoutes.patch("/:noteId", async (req: Request, res: Response) => {
     const updatedBody = req.body;
@@ -66,6 +57,29 @@ notesRoutes.patch("/:noteId", async (req: Request, res: Response) => {
        // const note = await Note.findOneAndUpdate({ _id: noteId }, updatedBody, { new: true, })
        // const note = await Note.updateOne({ _id: noteId }, updatedBody, { new: true, })
   console.log(notes);
+  res.status(200).json({
+    success: true,
+    notes,
+  });
+});
+//==================Delete========================
+notesRoutes.delete("/:noteId", async (req: Request, res: Response) => {
+    const noteId = req.params.noteId;
+    const notes = await Note.findByIdAndDelete(noteId)
+    // const note1 = await Note.findOneAndDelete({ _id: noteId })
+    // const note2 = await Note.deleteOne({ _id: noteId })
+  res.status(200).json({
+    success: true,
+    notes,
+  });
+});
+// ========================================================================================
+//==================Delete========================
+notesRoutes.delete("/:noteId", async (req: Request, res: Response) => {
+    const noteId = req.params.noteId;
+    const notes = await Note.findByIdAndDelete(noteId)
+    // const note1 = await Note.findOneAndDelete({ _id: noteId })
+    // const note2 = await Note.deleteOne({ _id: noteId })
   res.status(200).json({
     success: true,
     notes,
