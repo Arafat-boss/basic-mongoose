@@ -74,23 +74,23 @@ notesRoutes.delete("/:noteId", async (req: Request, res: Response) => {
   });
 });
 // ========================================================================================
-//==================Delete========================
-notesRoutes.delete("/:noteId", async (req: Request, res: Response) => {
-    const noteId = req.params.noteId;
-    const notes = await Note.findByIdAndDelete(noteId)
-    // const note1 = await Note.findOneAndDelete({ _id: noteId })
-    // const note2 = await Note.deleteOne({ _id: noteId })
-  res.status(200).json({
+notesRoutes.post("/creaate-note", async (req: Request, res: Response) => {
+
+
+//approach 02 to data inchart mongodb
+const body = req.body;
+const note = await Note.create(body)
+
+  res.status(201).json({
     success: true,
-    notes,
+    message: "Note create successfully",
+    note
   });
 });
-//==================Delete========================
-notesRoutes.delete("/:noteId", async (req: Request, res: Response) => {
-    const noteId = req.params.noteId;
-    const notes = await Note.findByIdAndDelete(noteId)
-    // const note1 = await Note.findOneAndDelete({ _id: noteId })
-    // const note2 = await Note.deleteOne({ _id: noteId })
+//==================gate all note=============
+notesRoutes.get("/", async (req: Request, res: Response) => {
+  const notes = await Note.find();
+  console.log(notes);
   res.status(200).json({
     success: true,
     notes,

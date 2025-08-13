@@ -77,3 +77,16 @@ userRoutes.delete("/:userId", async (req: Request, res: Response) => {
     users,
   });
 });
+
+//===============================================================================
+//==================Delete========================
+userRoutes.delete("/:userId", async (req: Request, res: Response) => {
+    const userId = req.params.noteId;
+    const users = await User.findByIdAndDelete(userId)
+    // const note1 = await Note.findOneAndDelete({ _id: noteId })
+    // const note2 = await Note.deleteOne({ _id: noteId })
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});
