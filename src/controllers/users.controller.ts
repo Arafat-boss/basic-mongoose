@@ -18,19 +18,6 @@ const user = await User.create(body)
     user
   });
 });
-// ================note create===============
-userRoutes.post("/create-user", async (req: Request, res: Response) => {
-
-//approach 02 to data inchart mongodb
-const body = req.body;
-const user = await User.create(body)
-
-  res.status(201).json({
-    success: true,
-    message: "User create successfully",
-    user
-  });
-});
 //==================gate all note=============
 userRoutes.get("/", async (req: Request, res: Response) => {
   const notes = await User.find();
@@ -61,6 +48,17 @@ userRoutes.patch("/:userId", async (req: Request, res: Response) => {
        // const note = await Note.findOneAndUpdate({ _id: noteId }, updatedBody, { new: true, })
        // const note = await Note.updateOne({ _id: noteId }, updatedBody, { new: true, })
   console.log(users);
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});
+//==================Delete========================
+userRoutes.delete("/:userId", async (req: Request, res: Response) => {
+    const userId = req.params.noteId;
+    const users = await User.findByIdAndDelete(userId)
+    // const note1 = await Note.findOneAndDelete({ _id: noteId })
+    // const note2 = await Note.deleteOne({ _id: noteId })
   res.status(200).json({
     success: true,
     users,
