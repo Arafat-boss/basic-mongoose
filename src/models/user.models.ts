@@ -27,6 +27,9 @@ const userSchema = new Schema<IUser>({
         enum: ['user', 'admin'],
         default:'user'
     }
+},{
+  versionKey: false,
+  timestamps: true
 });
 
-export const User = model("User", userSchema)
+export const User = model<IUser>("User", userSchema)
