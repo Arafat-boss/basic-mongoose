@@ -21,6 +21,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       lowercase: true,
       trim: true,
+      unique: true,
     //   validate: {
     //     validator: function (v) {
     //       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v);
