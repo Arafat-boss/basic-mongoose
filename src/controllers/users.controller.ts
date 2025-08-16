@@ -1,9 +1,20 @@
- import express, { Request, Response } from"express"
-
+import express, { Request, Response } from"express"
 import { User } from "../models/user.models";
+import z from "zod";
 
 
 export const userRoutes = express.Router()
+
+const CreateUserZodSchema = z.object(
+  {
+     firstName: z.string(),
+    lastName: z.string(),
+    email: z.string(), 
+    password: z.string(),
+    age: z.number(),
+    role: z.string().optional()
+  }
+)
 
 // ================note create===============
 userRoutes.post("/create-user", async (req: Request, res: Response) => {
