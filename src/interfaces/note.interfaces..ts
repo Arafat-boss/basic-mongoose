@@ -6,5 +6,5 @@ export interface INote {
     category: string,
     pinned: boolean,
     tags:{labrl:string, color: string},
-    userID: Types.ObjectId,
+    user: Types.ObjectId,
 }

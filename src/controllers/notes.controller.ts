@@ -38,8 +38,8 @@ const note = await Note.create(body)
 });
 //==================gate all note=============
 notesRoutes.get("/", async (req: Request, res: Response) => {
-  const notes = await Note.find().populate('userID')
-  
+  const notes = await Note.find().populate('user')
+
   console.log(notes);
   res.status(200).json({
     success: true,
