@@ -20,7 +20,8 @@ const noteSchema = new Schema<INote>({
   },
   userID:{
     type: Schema.Types.ObjectId,
-    ref: User
+    ref: "User",
+    required: true,
   }
 },{
   versionKey: false,
