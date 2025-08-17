@@ -17,14 +17,15 @@ const CreateUserZodSchema = z.object({
 userRoutes.post("/create-user", async (req: Request, res: Response) => {
   //approach 02 to data inchart mongodb
   try {
-    const body = await CreateUserZodSchema.parseAsync(req.body)
-    console.log(body);
-    // const user = await User.create(body);
+    // const Zodbody = await CreateUserZodSchema.parseAsync(req.body)
+    // console.log(Zozbody);
+    const body = req.body;
+    const user = await User.create(body);
 
     res.status(201).json({
       success: true,
       message: "User create successfully",
-      user: {}
+      user,
     });
   } catch (error: any) {
     res.status(400).json({

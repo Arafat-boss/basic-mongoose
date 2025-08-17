@@ -5,5 +5,10 @@ export interface IUser {
     email: string, 
     password: string,
     age: number,
-    role: "user" | "admin"
+    role: "user" | "admin",
+    address:{
+        city: string,
+        street: string,
+        zip: number
+    }
 }

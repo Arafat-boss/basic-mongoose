@@ -47,6 +47,11 @@ const userSchema = new Schema<IUser>(
       enum: ["user", "admin"],
       default: "user",
     },
+    address: {
+        city: {type: String},
+        street: {type:String},
+        zip: {type: Number}
+    }
   },
   {
     versionKey: false,
