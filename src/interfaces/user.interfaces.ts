@@ -14,3 +14,7 @@ export interface IUser {
   address: IAddress
 }
 
+export interface UserInstanceMethods{
+  hasPassword(password: string): string
+}
+

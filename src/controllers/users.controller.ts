@@ -23,6 +23,7 @@ userRoutes.post("/create-user", async (req: Request, res: Response) => {
     const body = req.body;
     const bcryptPassword = await bcrypt.hash(body.password, 10)
     console.log(bcryptPassword);
+    body.password = bcryptPassword
 
     const user = await User.create(body);
 

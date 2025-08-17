@@ -1,6 +1,8 @@
-import { model, Schema } from "mongoose";
-import { IAddress, IUser } from "../interfaces/user.interfaces";
+import { Model, model, Schema } from "mongoose";
+import { IAddress, IUser, UserInstanceMethods } from "../interfaces/user.interfaces";
 import validator from "validator";
+import bcrypt from "bcrypt"
+
 
 const addressSchema = new Schema<IAddress>({
   city: { type: String },
@@ -10,7 +12,7 @@ const addressSchema = new Schema<IAddress>({
     _id: false
 });
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods> (
   {
     firstName: {
       type: String,
@@ -64,5 +66,10 @@ const userSchema = new Schema<IUser>(
     timestamps: true,
   }
 );
+
+userSchema.method("hasPassword", async function(plainPassword: string){
+    const bcryptPassword = await bcrypt.hash(plainPassword, 10)
+    return bcryptPassword
+})
 
 export const User = model<IUser>("User", userSchema);
