@@ -38,7 +38,8 @@ const note = await Note.create(body)
 });
 //==================gate all note=============
 notesRoutes.get("/", async (req: Request, res: Response) => {
-  const notes = await Note.find().populate('userID');
+  const notes = await Note.find().populate('userID')
+  
   console.log(notes);
   res.status(200).json({
     success: true,
@@ -85,14 +86,5 @@ const note = await Note.create(body)
     success: true,
     message: "Note create successfully",
     note
-  });
-});
-//==================gate all note=============
-notesRoutes.get("/", async (req: Request, res: Response) => {
-  const notes = await Note.find();
-  console.log(notes);
-  res.status(200).json({
-    success: true,
-    notes,
   });
 });
