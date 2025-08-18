@@ -15,6 +15,6 @@ export interface IUser {
 }
 
 export interface UserInstanceMethods{
-  hasPassword(password: string): string
+  hasPassword(password: string): Promise<string>
 }
 
