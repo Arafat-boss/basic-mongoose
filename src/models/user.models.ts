@@ -1,18 +1,25 @@
 import { Model, model, Schema } from "mongoose";
-import { IAddress, IUser, UserInstanceMethods } from "../interfaces/user.interfaces";
+import {
+  IAddress,
+  IUser,
+  UserInstanceMethods,
+  UserStaticMethods,
+} from "../interfaces/user.interfaces";
 import validator from "validator";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
+const addressSchema = new Schema<IAddress>(
+  {
+    city: { type: String },
+    street: { type: String },
+    zip: { type: Number },
+  },
+  {
+    _id: false,
+  }
+);
 
-const addressSchema = new Schema<IAddress>({
-  city: { type: String },
-  street: { type: String },
-  zip: { type: Number },
-},{
-    _id: false
-});
-
-const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods> (
+const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods>(
   {
     firstName: {
       type: String,
@@ -58,7 +65,7 @@ const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods> (
       default: "user",
     },
     address: {
-        type: addressSchema
+      type: addressSchema,
     },
   },
   {
@@ -67,10 +74,16 @@ const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods> (
   }
 );
 
-userSchema.method("hasPassword", async function(plainPassword: string){
-    const password = await bcrypt.hash(plainPassword, 10)
-    return password
-})
+userSchema.method("hasPassword", async function (plainPassword: string) {
+  const password = await bcrypt.hash(plainPassword, 10);
+  return password;
+});
+userSchema.static("hasPassword", async function (plainPassword: string) {
+  const password = await bcrypt.hash(plainPassword, 10);
+  return password;
+});
 
-export const User = model<IUser, Model<IUser, {}, UserInstanceMethods>>("User", userSchema);
-
+export const User = model<IUser, UserStaticMethods>(
+  "User",
+  userSchema
+);

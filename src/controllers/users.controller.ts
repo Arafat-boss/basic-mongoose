@@ -19,17 +19,24 @@ const CreateUserZodSchema = z.object({
 userRoutes.post("/create-user", async (req: Request, res: Response) => {
   //approach 02 to data inchart mongodb
   try {
+    //type validation with Zod..........
     // const Zodbody = await CreateUserZodSchema.parseAsync(req.body)
     // console.log(Zozbody);
    
     const body = req.body;
 
-    const user = new User(body)
-    user.hasPassword(body.password)
-    
+    //built in and custom instance methods
+    // const user = new User(body)
+    // user.hasPassword(body.password)
+    // await user.save()
 
-    // const user = await User.create(body);
-       await user.save()
+
+    //built in and custom static methods
+    const password = await User.hasPassword(body.password)
+    console.log(password);
+    body.password = password
+
+    const user = await User.create(body);
 
     res.status(201).json({
       success: true,
