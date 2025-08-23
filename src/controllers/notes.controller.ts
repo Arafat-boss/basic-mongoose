@@ -5,7 +5,7 @@ import { Note } from "../models/note.models";
 export const notesRoutes = express.Router()
 
 // ================note create===============
-notesRoutes.post("/creaate-note", async (req: Request, res: Response) => {
+notesRoutes.post("/create-note", async (req: Request, res: Response) => {
 
     //approach 01 to data inchart mongodb//
 //   const myNote = new Note({
