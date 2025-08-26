@@ -7,7 +7,9 @@ import {
 } from "../interfaces/user.interfaces";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import { Note } from "./note.models";
 
+//sub document
 const addressSchema = new Schema<IAddress>(
   {
     city: { type: String },
@@ -19,6 +21,7 @@ const addressSchema = new Schema<IAddress>(
   }
 );
 
+//instance methods
 const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods>(
   {
     firstName: {
@@ -74,22 +77,33 @@ const userSchema = new Schema<IUser, Model<IUser>, UserInstanceMethods>(
   }
 );
 
+//instance methods
 userSchema.method("hasPassword", async function (plainPassword: string) {
   const password = await bcrypt.hash(plainPassword, 10);
   return password;
 });
+//static methods
 userSchema.static("hasPassword", async function (plainPassword: string) {
   const password = await bcrypt.hash(plainPassword, 10);
   return password;
 });
 
+//middleware pre, post
 userSchema.pre("save", async function(){
   this.password = await bcrypt.hash(this.password, 10) 
+})
+
+//post when user be delected then all notes will be deleted
+userSchema.post("save", async function(doc){
+   if(doc){
+     await Note.findOneAndDelete({user: doc._id})
+   }
 })
 userSchema.post("save", function(doc){
   console.log("after save", doc._id);
 })
 
+//model
 export const User = model<IUser, UserStaticMethods>(
   "User",
   userSchema
