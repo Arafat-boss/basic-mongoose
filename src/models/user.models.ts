@@ -88,11 +88,19 @@ userSchema.static("hasPassword", async function (plainPassword: string) {
   return password;
 });
 
-//middleware pre, post
+
+//pre hooks
+//DOCUMENT MIDDLEWARE
 userSchema.pre("save", async function(){
   this.password = await bcrypt.hash(this.password, 10) 
 })
 
+//query middleware
+userSchema.pre("find", function(doc){
+  console.log("after Find", doc);
+})
+
+//post hooks
 //post when user be delected then all notes will be deleted
 userSchema.post("findOneAndDelete", async function(doc){
    if(doc){
@@ -100,9 +108,7 @@ userSchema.post("findOneAndDelete", async function(doc){
      await Note.deleteMany({user: doc._id})
    }
 })
-userSchema.post("save", function(doc){
-  console.log("after save", doc._id);
-})
+
 
 
 //model
