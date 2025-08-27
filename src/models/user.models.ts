@@ -102,6 +102,9 @@ userSchema.post("save", async function(doc){
 userSchema.post("save", function(doc){
   console.log("after save", doc._id);
 })
+userSchema.post("save", function(doc){
+  console.log("after save", doc._id);
+})
 
 //model
 export const User = model<IUser, UserStaticMethods>(
