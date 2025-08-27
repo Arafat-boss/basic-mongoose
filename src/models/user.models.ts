@@ -94,17 +94,16 @@ userSchema.pre("save", async function(){
 })
 
 //post when user be delected then all notes will be deleted
-userSchema.post("save", async function(doc){
+userSchema.post("findOneAndDelete", async function(doc){
    if(doc){
-     await Note.findOneAndDelete({user: doc._id})
+    console.log(doc);
+     await Note.deleteMany({user: doc._id})
    }
 })
 userSchema.post("save", function(doc){
   console.log("after save", doc._id);
 })
-userSchema.post("save", function(doc){
-  console.log("after save", doc._id);
-})
+
 
 //model
 export const User = model<IUser, UserStaticMethods>(
