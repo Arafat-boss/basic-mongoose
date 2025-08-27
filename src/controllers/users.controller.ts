@@ -17,7 +17,7 @@ const CreateUserZodSchema = z.object({
 });
 
 
-// ================note create===============
+// ================user create===============
 userRoutes.post("/create-user", async (req: Request, res: Response) => {
   //approach 02 to data inchart mongodb
   try {
@@ -56,16 +56,24 @@ userRoutes.post("/create-user", async (req: Request, res: Response) => {
 });
 
 
-//==================gate all note=============
+//==================gate all user=============
 userRoutes.get("/", async (req: Request, res: Response) => {
-  const notes = await User.find();
-  console.log(notes);
+  const userEmail = req.query.email;
+  console.log(userEmail);
+  // const d = await User.find({email: userEmail});
+  let users = []
+  if(userEmail){
+    users = await User.find({email: userEmail});
+  }else{
+    users = await User.find();
+  }
+  console.log(users);
   res.status(200).json({
     success: true,
-    notes,
+    users,
   });
 });
-//==================gate single note=============
+//==================gate single user=============
 userRoutes.get("/:userId", async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const users = await User.findById(userId);
