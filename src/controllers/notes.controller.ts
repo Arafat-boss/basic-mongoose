@@ -2,6 +2,7 @@
 import { Note } from "../models/note.models";
 
 
+// ===================router========================
 export const notesRoutes = express.Router()
 
 // ================note create===============

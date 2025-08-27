@@ -8,11 +8,14 @@ const app: Application = express();
 
 app.use(express.json())
 
+
+//==================routes========================
 app.use("/notes", notesRoutes)
 app.use("/users", userRoutes)
 
 
 
+// ===================welcome route========================
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome To Our Server");
 });
