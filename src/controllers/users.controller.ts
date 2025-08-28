@@ -60,7 +60,7 @@ userRoutes.post("/create-user", async (req: Request, res: Response) => {
 userRoutes.get("/", async (req: Request, res: Response) => {
   const userEmail = req.query.email;
   console.log(userEmail);
-  // const d = await User.find({email: userEmail});
+  // const users = await User.find();
   let users = []
   if(userEmail){
     users = await User.find({email: userEmail});
