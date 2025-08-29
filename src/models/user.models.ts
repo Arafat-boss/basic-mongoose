@@ -119,6 +119,7 @@ userSchema.post("findOneAndDelete", async function(doc, next){
 })
 
 
+//virtuals
 userSchema.virtual("fullName").get(function(){
   return `${this.firstName} ${this.lastName}`
 })
